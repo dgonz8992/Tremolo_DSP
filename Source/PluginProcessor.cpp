@@ -16,8 +16,7 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
 }
 
 AudioPluginAudioProcessor::~AudioPluginAudioProcessor()
-{
-}
+= default;
 
 //==============================================================================
 const juce::String AudioPluginAudioProcessor::getName() const
@@ -153,6 +152,7 @@ void AudioPluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     juce::ScopedNoDenormals noDenormals;
 
     float currentBpm = 120.0f;
+    double currentPpq = 0.0;
 
     if (const auto* playHead = getPlayHead())
     {
@@ -160,6 +160,9 @@ void AudioPluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
         {
             if (positionInfo->getBpm().hasValue())
                 currentBpm = static_cast<float>(*positionInfo->getBpm());
+
+            if (positionInfo->getPpqPosition().hasValue())
+            currentPpq = *positionInfo->getPpqPosition();
         }
     }
 
@@ -185,15 +188,15 @@ void AudioPluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     const bool sync = static_cast<int>(lfoSyncParam->load());
 
     if (sync == 0) lfo.setFrequency(rate);
-    else lfo.setSync(note, beatsPerSecond);
+    else lfo.setSync(note, beatsPerSecond, currentPpq);
 
     lfo.setAmplitude(depth);
     lfo.setShape (shape);
 
-    sinewave.process(buffer);
-    sinewave1.process(buffer);
-    sinewave2.process(buffer);
-    sinewave3.process(buffer);
+    // sinewave.process(buffer);
+    // sinewave1.process(buffer);
+    // sinewave2.process(buffer);
+    // sinewave3.process(buffer);
     // sinewave4.process(buffer);
     // sinewave5.process(buffer);
     // sinewave6.process(buffer);

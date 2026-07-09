@@ -33,6 +33,8 @@ set(SourceFiles
         Source/LFO.h
         Source/Sinewave.cpp
         Source/Sinewave.h
+        Source/Square.cpp
+        Source/Square.h
 )
 
 juce_add_plugin(${PROJECT_NAME}

@@ -17,13 +17,13 @@ void Sinewave::prepare(double sampleRate, const int numChannels)
 
 void Sinewave::process(juce::AudioBuffer<float>& buffer)
 {
-    if (phases.size() != buffer.getNumChannels())
+    if (phases.size() != static_cast<size_t>(buffer.getNumChannels()))
         return;
 
     for (int channel = 0; channel < buffer.getNumChannels(); ++ channel)
     {
         auto* output = buffer.getWritePointer(channel);
-        auto& phase = phases[channel];
+        auto& phase = phases[static_cast<size_t>(channel)];
 
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "PluginProcessor.h"
-#include "LFO.h"
+#include "Square.h"
 
 //==============================================================================
 class AudioPluginAudioProcessorEditor final : public juce::AudioProcessorEditor
@@ -16,6 +16,7 @@ public:
 
 private:
 
+    Square square;
     AudioPluginAudioProcessor& processorRef;
 
     juce::Slider lfoDepth;
@@ -39,7 +40,5 @@ private:
     juce::Image backgroundImage;
 
 
-
-
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPluginAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AudioPluginAudioProcessorEditor)
 };

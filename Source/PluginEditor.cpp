@@ -6,15 +6,16 @@
 
 //==============================================================================
 AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAudioProcessor& p)
-    : AudioProcessorEditor (&p), processorRef (p), lfoDepthAttachment (processorRef.getState(), "lfoDepth", lfoDepth),
-                                                    lfoRateAttachment(processorRef.getState(), "lfoRate", lfoRate),
-                                                    lfoShapeAttachment(processorRef.getState(), "lfoShape", lfoShape),
-                                                    lfoSyncAttachment(processorRef.getState(), "lfoSync", lfoSync),
-                                                    lfoNoteAttachment(processorRef.getState(), "lfoNote", lfoNote)
+    : AudioProcessorEditor(&p), processorRef(p),
+      lfoDepthAttachment(processorRef.getState(), "lfoDepth", lfoDepth),
+      lfoRateAttachment(processorRef.getState(), "lfoRate", lfoRate),
+      lfoShapeAttachment(processorRef.getState(), "lfoShape", lfoShape),
+      lfoSyncAttachment(processorRef.getState(), "lfoSync", lfoSync),
+      lfoNoteAttachment(processorRef.getState(), "lfoNote", lfoNote)
 
 {
-    juce::ignoreUnused (processorRef);
-    setSize (400, 400);
+    juce::ignoreUnused(processorRef);
+    setSize(400, 400);
 
     backgroundImage = juce::ImageCache::getFromMemory(BinaryData::GradientBackground_png,
                                                       BinaryData::GradientBackground_pngSize);
@@ -35,18 +36,18 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     lfoRateLabel.setJustificationType(juce::Justification::centred);
 
     lfoShape.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    lfoShape.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50 , 30);
+    lfoShape.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 30);
     lfoShape.setColour(juce::Slider::textBoxTextColourId, juce::Colours::darkgrey);
     lfoShapeLabel.setJustificationType(juce::Justification::centred);
 
-    lfoSync.setButtonText (juce::CharPointer_UTF8 ("\xE2\x99\xAA"));
-    lfoSync.setToggleState(false, juce::NotificationType::dontSendNotification);
+    lfoSync.setButtonText(juce::CharPointer_UTF8("\xE2\x99\xAA"));
     lfoSync.setClickingTogglesState(true);
     lfoSync.setColour(juce::TextButton::ColourIds::buttonOnColourId, juce::Colours::lightblue);
     lfoSync.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colours::darkblue);
     lfoSync.setColour(juce::TextButton::ColourIds::textColourOnId, juce::Colours::darkgrey);
     lfoSync.setColour(juce::TextButton::ColourIds::textColourOffId, juce::Colours::white);
 
+    addAndMakeVisible(square);
     addAndMakeVisible(lfoDepth);
     addAndMakeVisible(lfoShape);
     addAndMakeVisible(lfoDepthLabel);
@@ -59,7 +60,7 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
 
     lfoSync.onClick = [this]()
     {
-      const bool sync = lfoSync.getToggleState();
+        const bool sync = lfoSync.getToggleState();
         lfoNote.setVisible(sync);
         lfoRate.setVisible(!sync);
     };
@@ -67,7 +68,6 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     const bool initialSync = lfoSync.getToggleState();
     lfoNote.setVisible(initialSync);
     lfoRate.setVisible(!initialSync);
-
 }
 
 
@@ -90,6 +90,8 @@ void AudioPluginAudioProcessorEditor::paint (juce::Graphics& g)
 
 void AudioPluginAudioProcessorEditor::resized()
 {
+
+    square.setBounds(getWidth() / 2 - 162, getHeight() / 2 - 175, 125, 90);
 
     lfoDepthLabel.setBounds(getWidth() / 2 + 32, getHeight() / 2 + 165, 100, 20);
     lfoDepth.setBounds(getWidth() / 2 + 20, getHeight() / 2 + 55, 125, 115);

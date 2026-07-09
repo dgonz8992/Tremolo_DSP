@@ -14,13 +14,13 @@ public:
     void prepare(double sampleRate, int numChannels);
     void process(juce::AudioBuffer<float>& buffer);
 
-    [[nodiscard]] float getAmplitude() {return smoothAmp.getCurrentValue();}
-    [[nodiscard]] float getFrequency() {return smoothFreq.getCurrentValue();}
-    [[nodiscard]] int getShape () {return shape;}
+    [[nodiscard]] float getAmplitude() const {return smoothAmp.getCurrentValue();}
+    [[nodiscard]] float getFrequency() const {return smoothFreq.getCurrentValue();}
+    [[nodiscard]] int getShape () const {return shape;}
     void setAmplitude(const float newAmplitude) {smoothAmp.setTargetValue(newAmplitude);}
     void setFrequency(const float newFrequency) {smoothFreq.setTargetValue(newFrequency);}
     void setShape(const int newShape) {shape = newShape;}
-    void setSync(int knobPosition, float beatsPerSecond);
+    void setSync(const int knobPosition, const float beatsPerSecond, const double ppqPosition);
 
 
 private:
