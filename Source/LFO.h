@@ -34,7 +34,7 @@ private:
     int sync = 2;
 
     std::vector<float> filterMemories;
-    float filterAlpha = 0.007f;
+    float filterAlpha = 0.001f;
 
     static constexpr float doublePi = juce::MathConstants<float>::twoPi;
 };

@@ -19,18 +19,27 @@ void LFO::prepare(const double sampleRate, const int numChannels)
 
 void LFO::setSync(const int knobPosition, const float beatsPerSecond, const double ppqPosition)
 {
-    const int baseLength = knobPosition / 3;
-    const int modifier = knobPosition % 3;
+    int baseLength = knobPosition;
+    int modifier = 0;
+
+    if (knobPosition > 2)
+    {
+        baseLength = knobPosition / 3 + 2;
+        modifier = knobPosition % 3;
+    }
 
     float multiplier;
     switch (baseLength)
     {
-        case 0: multiplier = 0.25f; break;
-        case 1: multiplier = 0.5f; break;
-        case 2: multiplier = 1.0f; break;
-        case 3: multiplier = 2.0f; break;
-        case 4: multiplier = 4.0f; break;
-        case 5: multiplier = 8.0f; break;
+        case 0: multiplier = 0.03125f; break;
+        case 1: multiplier = 0.0625f; break;
+        case 2: multiplier = 0.125f; break;
+        case 3: multiplier = 0.25f; break;
+        case 4: multiplier = 0.5f; break;
+        case 5: multiplier = 1.0f; break;
+        case 6: multiplier = 2.0f; break;
+        case 7: multiplier = 4.0f; break;
+        case 8: multiplier = 8.0f; break;
         default: multiplier = 1.0f; break;
     }
 
@@ -60,7 +69,7 @@ void LFO::process(juce::AudioBuffer<float>& buffer)
         const float frequency = smoothFreq.getNextValue();
         const float amplitude = smoothAmp.getNextValue();
 
-        if (frequency == 0.0f) break;
+        if (frequency == 0.0f) continue;
 
         for (int channel = 0; channel < buffer.getNumChannels(); ++ channel)
         {

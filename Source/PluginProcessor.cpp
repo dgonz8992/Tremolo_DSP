@@ -236,7 +236,7 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 
 juce::AudioProcessorValueTreeState::ParameterLayout AudioPluginAudioProcessor::createParameters()
 {
-    juce::StringArray noteChoices {"1/1", "1/1d", "1/1t", "1/2", "1/2d", "1/2t",
+    juce::StringArray noteChoices {"8 bars", "4 bars", "2 bars", "1/1", "1/1d", "1/1t", "1/2", "1/2d", "1/2t",
                                     "1/4", "1/4d", "1/4t", "1/8", "1/8d", "1/8t",
                                     "1/16", "1/16d", "1/16t", "1/32", "1/32d", "1/32t"};
 
@@ -259,7 +259,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout AudioPluginAudioProcessor::c
         std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{"lfoNote"},
                                             "LFO Note",
                                             noteChoices,
-                                            6),
+                                            9),
 
         std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{"lfoShape"},
                                                     "LFO Shape",
